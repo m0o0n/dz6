@@ -21,9 +21,9 @@ const ContactList = () => {
 
   const createContact = dataByForm => {
     const isAlreadyExist = contact.find(el => el.name === dataByForm.name);
-    if (isAlreadyExist)
+    if (isAlreadyExist) {
       return alert(`${dataByForm.name} is already in contacts`);
-    dispatch(createContactAction(dataByForm));
+    } else dispatch(createContactAction(dataByForm));
   };
 
   // const filterContact = filterQuery => {
