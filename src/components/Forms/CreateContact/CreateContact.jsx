@@ -1,13 +1,15 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createContactAction } from 'store/contact/slice';
 // import { createContactAction } from 'store/contact/actions';
 import css from './CreateContact.module.css';
 
-const FormCreateContact = ({ createContact }) => {
+const FormCreateContact = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [isValid, setIsValid] = useState(true);
-
-  // const [state, setState] = useState({ name: '', number: '', isValid: true });
+  const contacts = useSelector(state => state.contacts.items)
+  const dispatch = useDispatch()
 
   const handleChange = ({ target: { value, name } }) => {
     if (name === 'name') setName(value);
@@ -17,8 +19,10 @@ const FormCreateContact = ({ createContact }) => {
   const handleSubmit = e => {
     e.preventDefault();
     if (!name || !number) return setIsValid(false);
-
-    createContact({ name, number, isValid });
+    const isAlreadyExist = contacts.find(el => el.name === name);
+    if (isAlreadyExist) {
+      return alert(`${name} is already in contacts`);
+    } else dispatch(createContactAction({ name, number, isValid }));
     setName('');
     setNumber('');
     setIsValid(true);

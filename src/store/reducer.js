@@ -10,5 +10,5 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, contactReducer);
 
 export const reducer = {
-  contact: persistedReducer,
+  contacts: persistedReducer,
 };
